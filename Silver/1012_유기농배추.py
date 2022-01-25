@@ -1,15 +1,15 @@
 graph = []
 
 
-def bfs(x, y, m, n):
-    if x < 0 or y < 0 or x >= m or y >= n:
+def bfs(x, y, n, m):
+    if x < 0 or y < 0 or x >= n or y >= m:
         return False
     if graph[x][y] == 1:
         graph[x][y] = 0
-        bfs(x + 1, y, m, n)
-        bfs(x - 1, y, m, n)
-        bfs(x, y + 1, m, n)
-        bfs(x, y - 1, m, n)
+        bfs(x + 1, y, n, m)
+        bfs(x - 1, y, n, m)
+        bfs(x, y + 1, n, m)
+        bfs(x, y - 1, n, m)
         return True
     else:
         return False
@@ -29,8 +29,8 @@ for case in range(cases):
 
 
     count = 0
-    for i in range(m):
-        for j in range(n):
-            if bfs(i, j, m, n):
+    for i in range(n):
+        for j in range(m):
+            if bfs(i, j, n, m):
                 count += 1
     print(count)
