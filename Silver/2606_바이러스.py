@@ -27,12 +27,12 @@ for i in range(m):
 
 print(mother)
 
-for i in range(len(mother)):
-    if mother[i] != mother[mother[i]]:
-        mother[i] = mother[mother[i]]
-
-
-print(mother.count(1)-1)
+# for i in range(len(mother)):
+#     if mother[i] != mother[mother[i]]:
+#         mother[i] = mother[mother[i]]
+#
+#
+# print(mother.count(1)-1)
 
 # dfs 활용해서 풀어보기!
 

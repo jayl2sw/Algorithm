@@ -1,10 +1,14 @@
-def duplicated_letters2(word):
-    result = []
-    for char in word:
-        if word.count(char) >= 2:
-            if char not in result:
-                result.append(char)
-    return result
+n, m = map(int,input().split())
+def issquare(k):
+    return int(k ** 0.5) ** 2 == k
 
-print(duplicated_letters2('apple'),
-duplicated_letters2('banana')) # => ['a', 'n']
+nlist = []
+i = 1
+while i < m**0.5:
+    if issquare(i):
+        nlist.append(i)
+    i += 1
+
+print(nlist)
+
+print(issquare(4))
