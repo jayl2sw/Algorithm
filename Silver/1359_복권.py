@@ -24,7 +24,6 @@ for i in range(k):
         continue
     up = combination(m, i) * combination(n - m, m - i)
     down = combination(n, m)
-    print(up,down)
     total += up/down
 
 
