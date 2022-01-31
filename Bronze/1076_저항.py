@@ -10,4 +10,4 @@ for i in range(len(array)):
     if k == array[i]:
         result += str(0) * i
 
-print(result)
+print(int(result))
