@@ -9,14 +9,21 @@ def check_array(array, alpha):
                 return False
     else:
         for i in range(1, len(array)):
-            if array[i] != array[0] + (array[1]-array[0]) * (alpha**i - 1) / (alpha - 1):
-                return False
+            if alpha == 1:
+                if array[i] != array[0] + (array[1] - array[0]) * (alpha ** i - 1):
+                    return False
+            else:
+                if array[i] != array[0] + (array[1]-array[0]) * (alpha**i - 1) / (alpha - 1):
+                    return False
     return True
 
 
 def find_next(array, alpha, n):
-     next = array[0] + (array[1]-array[0])*(alpha ** n - 1) / (alpha - 1)
-     return int(next)
+    if alpha == 1:
+        next = array[0] + (array[1]-array[0])*(alpha ** n - 1)
+    else:
+        next = array[0] + (array[1]-array[0])*(alpha ** n - 1) / (alpha - 1)
+    return int(next)
 
 n = int(input())
 array = list(map(int,input().split()))
