@@ -1,17 +1,15 @@
-n = int(input())
+import sys
 
+n = int(sys.stdin.readline())
 
 if n % 2 == 0 or n % 5 == 0:
     print(-1)
-
-result = 1
-
-while True:
-    if int(result) % n == 0:
-        print(len(str(result)))
-        break
-    else:
-        result = result * 10 + 1
-
+else:
+    result = 1
+    ans = 1
+    while result % n :
+        result = (result % n) * 10 + 1
+        ans += 1
+    print(ans)
 
 
