@@ -1,6 +1,7 @@
 # 에라토스테네스의 체
 import sys
 input = sys.stdin.readline
+
 def solution(min,max):
     answer = max - min + 1
     check = [False] * answer
