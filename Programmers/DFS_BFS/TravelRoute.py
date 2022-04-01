@@ -1,18 +1,18 @@
-def dfs(tickets, start, used):
-    if len(used) == len(tickets):
+def dfs(tickets, start, used, N):
+    if len(used) == N:
         result = used
         return result
     for ticket in tickets:
         if ticket[0] == start and ticket not in used:
-            result = dfs(tickets, ticket[1], used + [ticket])
+            result = dfs(tickets, ticket[1], used + [ticket], N)
             if result:
                 return result
 
 
 def solution(tickets):
-    global results
     tickets.sort()
-    results = dfs(tickets, "ICN", [])
+    N = len(tickets)
+    results = dfs(tickets, "ICN", [], N)
     answer = []
     for i in range(len(results)):
         if i == 0:
@@ -23,6 +23,6 @@ def solution(tickets):
     return answer
 
 
-tickets = [["ICN", "A"], ["ICN", "A"], ["A", "ICN"], ["A", "C"]]
+tickets = [["ICN", "AOO"], ["AOO", "BOO"], ["BOO", "COO"], ["COO", "DOO"], ["DOO", "EOO"], ["EOO", "DOO"], ["DOO", "COO"], ["COO", "BOO"], ["BOO", "AOO"]]
 
 print(solution(tickets))
