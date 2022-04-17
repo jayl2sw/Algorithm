@@ -1,32 +1,36 @@
+# String에서 조건에 맞는 Set 만들기
+def makeSet(String):
+    array = []
+    for i in range(len(String)-1):
+        if 'A' <= String[i] <= 'Z' and 'A' <= String[i+1] <= 'Z':
+            array.append(String[i] + String[i + 1])
+
+    return array
+
 def solution(str1, str2):
-    str1 = str1.upper()
-    str2 = str2.upper()
+    # 두개의 문자열 모두 대문자로 변환 후 Set 만듬
+    set1 = makeSet(str1.upper())
+    set2 = makeSet(str2.upper())
 
-    set1 = []
-    set2 = []
-    for i in range(len(str1)-1):
-        if ord('A') <= ord(str1[i]) <= ord('Z') and ord('A') <= ord(str1[i+1]) <= ord('Z'):
-            set1.append(str1[i] + str1[i + 1])
+    # 1. 합집합 구하기
+    set1_temp = set1[:]             # set1 copy array 생성
+    len_union = len(set1)           # 합집합 개수 set1으로 초기화
+    for i in set2:                  # set2 돌면서
+        if i not in set1_temp:      # set1에 없으면
+            len_union += 1          # 합집합 개수 하나 추가
+        else:                       # set1에 있으면
+            set1_temp.remove(i)     # set1 copy array 에서 해당 원소 제거
 
-    for i in range(len(str2) - 1):
-        if ord('A') <= ord(str2[i]) <= ord('Z') and ord('A') <= ord(str2[i + 1]) <= ord('Z'):
-            set2.append(str2[i] + str2[i + 1])
+    # 2. 교집합 구하기
+    set1_temp = set1[:]             # set1 copy array 생성
+    len_intersection = 0            # 교집합 개수 0으로 초기화
+    for i in set2:                  # set2 돌면서
+        if i in set1_temp:          # set1에 있으면
+            len_intersection += 1   # 교집합 개수 하나 추가
+            set1.remove(i)          # set1에서 제거
 
-    set1_temp = set1[:]
-    len_union = len(set1)
-    for i in set2:
-        if i not in set1_temp:
-            len_union += 1
-        else:
-            set1_temp.remove(i)
-
-    len_intersection = 0
-    for i in set2:
-        if i in set1:
-            len_intersection += 1
-            set1.remove(i)
-
-    return int(len_intersection / len_union * 65536) if len_union else 65336
+    len_union = len(set1) + len(set2) - len_intersection
+    return int(len_intersection / len_union * 65536) if len_union else 65536 # 만약 합집합의 개수가 0이면 65536 반환
 
 
 str1 = 'handshake'

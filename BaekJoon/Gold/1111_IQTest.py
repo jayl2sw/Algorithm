@@ -1,43 +1,34 @@
-def find_alpha(array):
-    alpha = (array[2] - array[1]) / (array[1] - array[0])
-    return alpha
+N = int(input())
+arr = list(map(int, input().split()))
 
-def check_array(array, alpha):
-    if alpha == 0:
-        for i in range(1, len(array)-1):
-            if array[i-1]+array[i+1] != array[i]*2:
-                return False
+result = 'B'
+if len(arr) == 1:
+    result = 'A'
+
+elif len(arr) == 2:
+    if arr[0] == arr[1]:
+        result = arr[0]
     else:
-        for i in range(1, len(array)):
-            if alpha == 1:
-                if array[i] != array[0] + (array[1] - array[0]) * (alpha ** i - 1):
-                    return False
-            else:
-                if array[i] != array[0] + (array[1]-array[0]) * (alpha**i - 1) / (alpha - 1):
-                    return False
-    return True
+        result = 'A'
 
-
-def find_next(array, alpha, n):
-    if alpha == 1:
-        next = array[0] + (array[1]-array[0])*(alpha ** n - 1)
+elif len(arr) > 2:
+    if arr[1] - arr[0] != 0:
+        a = int((arr[2] - arr[1]) / (arr[1] - arr[0]))
+        b = int(arr[1] - arr[0] * a)
+    elif arr[2] - arr[1] == 0:
+        a, b = 1, 0
     else:
-        next = array[0] + (array[1]-array[0])*(alpha ** n - 1) / (alpha - 1)
-    return int(next)
+        a = 0
+        b = int(1e9)
 
-n = int(input())
-array = list(map(int,input().split()))
+    for i in range(3, len(arr)):
+        if a * arr[i-1] + b == arr[i]:
+            continue
+        else:
+            break
+    else:
+        result = int(a * arr[-1] + b)
 
-if n < 1:
-    print('A')
-elif n == 2:
-    if array[0] == array[1]:
-        print(array[0])
-    else:
-        print("A")
-else:
-    alpha = find_alpha(array)
-    if check_array(array, alpha) == False:
-        print("B")
-    else:
-        print(find_next(array, alpha, n))
+print(result)
+
+
