@@ -1,44 +1,52 @@
 import heapq
 
-n, m, x = map(int, input().split())
+N, M, X = map(int, input().split())
+graphCome = [[] for _ in range(N+1)]
+graphBack = [[] for _ in range(N+1)]
 
-graph = [[] for _ in range(n+1)]
-for i in range(m):
-    start, end, time = map(int, input().split())
-    graph[start].append((time, start, end))
+for _ in range(M):
+    start, end, time = map(int,input().split())
+    graphCome[start].append((time, start, end))
+    graphBack[end].append((time, end, start))
 
-q = []
-for temp in graph[x]:
-    heapq.heappush(q, temp)
+qCome = []
+qBack = []
+for temp in graphCome[X]:
+    heapq.heappush(qCome, temp)
 
-d = [int(1e6)] * (n+1)
-d[x] = 0
-visited = [x]
+for temp in graphBack[X]:
+    heapq.heappush(qBack, temp)
 
-while q:
-    time, start, end = heapq.heappop(q)
-    if d[end] > d[start] + time:
-        d[end] = d[start] + time
-    visited.append(end)
-    for temp in graph[end]:
-        if temp not in q and temp[2] not in visited:
-            heapq.heappush(q, temp)
+dCome = [int(1e6)] * (N+1)
+dBack = [int(1e6)] * (N+1)
+dCome[X] = 0
+dBack[X] = 0
 
+visitedCome = [X]
+visitedBack = [X]
 
-b = [int(1e6)] * (n+1)
-b[x] = 0
-visited_b = [x]
+while qCome:
+    time, start, end = heapq.heappop(qCome)
+    if dCome[end] > dCome[start] + time:
+        dCome[end] = dCome[start] + time
+    visitedCome.append(end)
+    for temp in graphCome[end]:
+        if temp not in qCome and temp[2] not in visitedCome:
+            heapq.heappush(qCome, temp)
 
+while qBack:
+    time, start, end = heapq.heappop(qBack)
+    if dBack[end] > dBack[start] + time:
+        dBack[end] = dBack[start] + time
+    visitedBack.append(end)
+    for temp in graphBack[end]:
+        if temp not in qBack and temp[2] not in visitedBack:
+            heapq.heappush(qBack, temp)
 
-for temp in graph[x]:
-    heapq.heappush(q, temp)
-    
-while q:
-    time, start, end = heapq.heappop(q)
-    if d[end] > d[start] + time:
-        d[end] = d[start] + time
-    visited.append(end)
-    for temp in graph[end]:
-        if temp not in q and temp[2] not in visited:
-            heapq.heappush(q, temp)
+maxDistance = 0
+print(dCome, dBack)
+for i in range(1, len(dCome)):
+    if maxDistance < dCome[i] + dBack[i]:
+        maxDistance = dCome[i] + dBack[i]
 
+print(maxDistance)

@@ -1,52 +1,42 @@
-import heapq
+def dijkstra(graph):
+    visited = [0] * (N + 1)
+    distance = [INF] * (N + 1)
+    distance[X] = 0
 
-N, M, X = map(int, input().split())
-graphCome = [[] for _ in range(N+1)]
-graphBack = [[] for _ in range(N+1)]
+    while sum(visited) < len(visited) - 1:
+        current_node = 0
+        current_distance = INF
+
+        for current in range(len(distance)):
+            if current_distance > distance[current] and not visited[current]:
+                current_node = current
+                current_distance = distance[current]
+
+        visited[current_node] = 1
+
+        for nxt, temp in graph[current_node]:
+            distance[nxt] = min(distance[nxt], distance[current_node] + temp)
+
+    return distance
+
+INF = int(1e9)
+N, M, X = map(int,input().split())
+graph1 = [[] for _ in range(N+1)]
+graph2 = [[] for _ in range(N+1)]
 
 for _ in range(M):
-    start, end, time = map(int,input().split())
-    graphCome[start].append((time, start, end))
-    graphBack[end].append((time, end, start))
+    start, end, dis = map(int, input().split())
+    graph1[start].append((end, dis))
+    graph2[end].append((start, dis))
 
-qCome = []
-qBack = []
-for temp in graphCome[X]:
-    heapq.heappush(qCome, temp)
+list1 = dijkstra(graph1)
+list2 = dijkstra(graph2)
 
-for temp in graphBack[X]:
-    heapq.heappush(qBack, temp)
+result = 0
+for i in range(1, N+1):
+    if result < list1[i] + list2[i]:
+        result = list1[i] + list2[i]
+print(result)
 
-dCome = [int(1e6)] * (N+1)
-dBack = [int(1e6)] * (N+1)
-dCome[X] = 0
-dBack[X] = 0
 
-visitedCome = [X]
-visitedBack = [X]
 
-while qCome:
-    time, start, end = heapq.heappop(qCome)
-    if dCome[end] > dCome[start] + time:
-        dCome[end] = dCome[start] + time
-    visitedCome.append(end)
-    for temp in graphCome[end]:
-        if temp not in qCome and temp[2] not in visitedCome:
-            heapq.heappush(qCome, temp)
-
-while qBack:
-    time, start, end = heapq.heappop(qBack)
-    if dBack[end] > dBack[start] + time:
-        dBack[end] = dBack[start] + time
-    visitedBack.append(end)
-    for temp in graphBack[end]:
-        if temp not in qBack and temp[2] not in visitedBack:
-            heapq.heappush(qBack, temp)
-
-maxDistance = 0
-print(dCome, dBack)
-for i in range(1, len(dCome)):
-    if maxDistance < dCome[i] + dBack[i]:
-        maxDistance = dCome[i] + dBack[i]
-
-print(maxDistance)
