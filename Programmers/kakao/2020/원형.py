@@ -17,7 +17,7 @@ def solution(n, weak, dist):
                     if idx + 1 > len(dist):   # 만약 인원수보다 idx + 1이 크면 불가능하므로
                         break   #멈춤
                     position = weak[index] + workers[idx] # 수리되지 않은 index부터  idx번째 worker가 커버할 수 있는 범위까지 이동
-            answer = min(answer, idx+1)  # 답이랑 인원수 중 작은것으로 갱신
+            answer = min(answer, idx+1) #일꾼수  # 답이랑 인원수 중 작은것으로 갱신
     if answer > len(dist):
         return -1
 
