@@ -1,27 +1,30 @@
-import sys
 import heapq
+import sys
+
 input = sys.stdin.readline
 
 N, K = map(int,input().split())
-jewelries = []
+gems = []
 for _ in range(N):
-    m, v = map(int, input().split())
-    heapq.heappush(jewelries, (-m, v))
+    weight, value = map(int, input().split())
+    heapq.heappush(gems, (weight, value))
 
 bags = []
 for _ in range(K):
-    heapq.heappush(bags, -int(input().strip()))
+    capacity = int(input().strip())
+    heapq.heappush(bags, capacity)
 
 answer = 0
-while bags:
-    bag = -heapq.heappop(bags)
+available = []
 
-    while jewelries:
-        m, v = heapq.heappop(jewelries)
-        if bag > -m:
-            print(answer)
-            answer += v
-            break
+for _ in range(K):
+    capacity = heapq.heappop(bags)
+
+    while gems and capacity >= gems[0][0]:
+        weight, value = heapq.heappop(gems)
+        heapq.heappush(available, -value)
+
+    if available:
+        answer -= heapq.heappop(available)
 
 print(answer)
-

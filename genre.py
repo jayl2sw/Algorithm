@@ -1,21 +1,43 @@
-path = [0] * 10
-n = 5
+import numpy as np
+
+np.random.seed(0)
+
+# def solution(array,shift):
+#     if shift == "rotated":
+#         answer = np.rot90(array, 1)
+#     elif shift == "flipped":
+#         answer = np.flip(array,0)
+#     elif shift == "rolled":
+#         answer = np.roll(array, 1)
+#     else:
+#         answer = [array[i][:] for i in range(len(array))]
+#         for i in range(len(array)):
+#             for j in range(len(array[0])):
+#                 answer[i][j] += round(np.random.normal(0, 0.05),2)
+#
+#
+#     return answer
 
 
-def bbq(lev, sum):
-    global path, n
-
-    if sum > 7 : return
-    if lev == n:
-        for i in range(lev):
-            print(path[i], end=' ')
-        print(" = " + str(sum))
-        return
 
 
-    for i in range(6):
-        path[lev] = i + 1
-        bbq(lev +1, sum + i + 1)
-        path[lev] = 0
+def solution(array, shift):
+    if shift == "rotated":
+        answer = np.rot90(array, 1)
+    elif shift == "flipped":
+        answer = np.flip(array, 0)
+    elif shift == "rolled":
+        answer = [np.roll(array, 2), ]
 
-bbq(0,0)
+    else:
+        noise = np.random.normal(0, 0.05, array.shape)
+        answer = array + noise
+
+
+    return answer
+
+array = [[1, 1, 1, 0], [1, 0, 1, 0], [1, 1, 1, 0], [0, 0, 1, 0]]
+array = np.array(array)
+print(np.roll(array, 2))
+print(np.roll(array, 3))
+# print(solution(array, 'rolled'))
