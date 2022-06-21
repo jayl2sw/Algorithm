@@ -1,2 +1,10 @@
-hx = {x: hex(x).replace('0x','').upper() for x in range(1, 16)}
-print(hx)
+N = int(input())
+arr = []
+for _ in range(N):
+    a = int(input())
+    if a == 0:
+        arr.pop()
+    else:
+        arr.append(a)
+
+print(sum(arr))
