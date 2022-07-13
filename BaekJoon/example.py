@@ -1,44 +1,11 @@
 import sys
-input = sys.stdin.readline
 
-def solution(p, n, q):
-    flag = True
-    front = 0
-    rear = n
-    direction = 1
+sum = 0
+while True:
+    num = int(sys.stdin.readline().strip())
+    if num < 0:
+        break
+    else:
+       sum += num
 
-    for char in p:
-        if char == "R":
-            flag = not flag
-        else:
-            if flag:
-                front += 1
-            else:
-                rear -= 1
-
-    if front > rear:
-        return 'error'
-
-
-    answer = list(q)[front:rear]
-
-
-    if not flag:
-        answer.reverse()
-
-    answer = str(answer).replace(" ", "")
-    return answer
-
-
-
-T = int(input().strip())
-
-for _ in range(T):
-    p = input().strip()
-    n = int(input().strip())
-    try:
-        q = list(map(int,input()[1:-2].split(',')))
-    except:
-        print('error')
-        continue
-    print(solution(p, n, q))
+print(sum)
